@@ -4,6 +4,7 @@ using MyCinema.Data;
 using MyCinema.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -39,9 +40,28 @@ namespace MyCinema.Controllers
             return Ok(movie);
         }
 
+        //[HttpPost]
+        //public IActionResult Post([FromBody] Movie movie)
+        //{
+        //    _dbContext.Movies.Add(movie);
+        //    _dbContext.SaveChanges();
+
+        //    return StatusCode(StatusCodes.Status201Created);
+        //}
+
         [HttpPost]
-        public IActionResult Post([FromBody] Movie movie)
+        public IActionResult Post([FromForm] Movie movie)
         {
+            var guid = Guid.NewGuid();
+            var filePath = Path.Combine("wwwroot", guid + ".jpg");
+
+            if (movie.Image != null) 
+            {
+                var fileStream = new FileStream(filePath, FileMode.Create);
+                movie.Image.CopyTo(fileStream);
+            }
+
+            movie.ImageUrl = filePath.Remove(0, 7);
             _dbContext.Movies.Add(movie);
             _dbContext.SaveChanges();
 
@@ -49,7 +69,7 @@ namespace MyCinema.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Movie movieObj)
+        public IActionResult Put(int id, [FromForm] Movie movieObj)
         {
             var movie = _dbContext.Movies.Find(id);
 
@@ -57,12 +77,25 @@ namespace MyCinema.Controllers
             {
                 return NotFound("No record found  against this Id");
             }
+            else 
+            {
+                var guid = Guid.NewGuid();
+                var filePath = Path.Combine("wwwroot", guid + ".jpg");
 
-            movie.Name = movieObj.Name;
-            movie.Language = movieObj.Language;
-            
-            _dbContext.SaveChanges();
-            return Ok("Record update successfully");
+                if (movieObj.Image != null)
+                {
+                    var fileStream = new FileStream(filePath, FileMode.Create);
+                    movieObj.Image.CopyTo(fileStream);
+                    movie.ImageUrl = filePath.Remove(0, 7);
+                }
+
+                movie.Name = movieObj.Name;
+                movie.Language = movieObj.Language;
+                movie.Rating = movieObj.Rating;
+
+                _dbContext.SaveChanges();
+                return Ok("Record update successfully");
+            }
         }
 
         [HttpDelete("{id}")]
