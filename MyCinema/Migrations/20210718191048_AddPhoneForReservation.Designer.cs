@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyCinema.Data;
 
 namespace MyCinema.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    partial class CinemaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210718191048_AddPhoneForReservation")]
+    partial class AddPhoneForReservation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,7 +87,7 @@ namespace MyCinema.Migrations
                     b.Property<int>("Qty")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ReservationTime")
+                    b.Property<DateTime>("ReservatioTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
