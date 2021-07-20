@@ -31,7 +31,7 @@ namespace MyCinema.Controllers
         [HttpPost]
         public IActionResult Register([FromBody] User user)
         {
-            var userWithSameEmail = _dbContext.Users.Where(u => u.Email == user.Email).SingleOrDefault();
+            var userWithSameEmail = _dbContext.Users.FirstOrDefault(u => u.Email == user.Email);
 
             if (userWithSameEmail != null)
             {

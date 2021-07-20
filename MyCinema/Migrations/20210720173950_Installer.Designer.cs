@@ -10,8 +10,8 @@ using MyCinema.Data;
 namespace MyCinema.Migrations
 {
     [DbContext(typeof(CinemaDbContext))]
-    [Migration("20210718191048_AddPhoneForReservation")]
-    partial class AddPhoneForReservation
+    [Migration("20210720173950_Installer")]
+    partial class Installer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -87,7 +87,7 @@ namespace MyCinema.Migrations
                     b.Property<int>("Qty")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ReservatioTime")
+                    b.Property<DateTime>("ReservationTime")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")

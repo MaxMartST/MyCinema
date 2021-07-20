@@ -3,12 +3,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MyCinema.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Installer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
                 name: "Movies",
+                schema: "cinema",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -32,6 +33,7 @@ namespace MyCinema.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Users",
+                schema: "cinema",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -48,13 +50,15 @@ namespace MyCinema.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Reservations",
+                schema: "cinema",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Qty = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<double>(type: "float", nullable: false),
-                    ReservatioTime = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReservationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     MovieId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -64,12 +68,14 @@ namespace MyCinema.Migrations
                     table.ForeignKey(
                         name: "FK_Reservations_Movies_MovieId",
                         column: x => x.MovieId,
+                        principalSchema: "cinema",
                         principalTable: "Movies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Reservations_Users_UserId",
                         column: x => x.UserId,
+                        principalSchema: "cinema",
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -77,11 +83,13 @@ namespace MyCinema.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservations_MovieId",
+                schema: "cinema",
                 table: "Reservations",
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservations_UserId",
+                schema: "cinema",
                 table: "Reservations",
                 column: "UserId");
         }
