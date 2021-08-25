@@ -33,7 +33,7 @@ namespace MyCinema
         {
 
             services.AddControllers();
-            services.AddDbContext<CinemaDbContext>(option => option.UseSqlServer(@"Data Source = ABELAC; Initial Catalog = CinemaDb; Integrated Security = True"));
+            services.AddDbContext<CinemaDbContext>(option => option.UseSqlServer(@"Data Source = DESKTOP-74TR6T6; Initial Catalog = CinemaDb; Integrated Security = True"));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyCinema", Version = "v1" });
